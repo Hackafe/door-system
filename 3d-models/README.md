@@ -1,1 +1,1 @@
-Be careful. Some models may not be very accurate. You on your own risk. :)
+Be careful. Some models may not be very accurate. Use on your own risk. :)
