@@ -12,18 +12,19 @@ a:hover {
 
 /*Green button*/
 
-.btn-primary {
+.btn-green {
 	color: #fff;
 	background-color: #28a745;
 	background-image: -webkit-linear-gradient(270deg, #34d058 0%, #28a745 90%);
 	background-image: linear-gradient(-180deg, #34d058 0%, #28a745 90%);
 }
 
-.btn-primary:focus {
+.btn-green:focus {
 	box-shadow: 0 0 0 0.2em rgba(52,208,88,0.3);
 }
 
-.btn-primary:hover {
+.btn-green:hover {
+	color: #fff;
 	background-color: #269f42;
 	background-image: -webkit-linear-gradient(270deg, #2fcb53 0%, #269f42 90%);
 	background-image: linear-gradient(-180deg, #2fcb53 0%, #269f42 90%);
@@ -31,14 +32,14 @@ a:hover {
 	border-color: rgba(27,31,35,0.5);
 }
 
-.btn-primary:active {
+.btn-green:active {
 	background-color: #279f43;
 	background-image: none;
 	border-color: rgba(27,31,35,0.5);
 	box-shadow: inset 0 0.15em 0.3em rgba(27,31,35,0.15);
 }
 
-.btn-primary:disabled {
+.btn-green:disabled {
 	color: rgba(255,255,255,0.75);
 	background-color: #94d3a2;
 	background-image: none;
@@ -48,18 +49,18 @@ a:hover {
 
 /*Red button*/
 
-.btn-danger {
+.btn-red {
 	color: #cb2431;
 	background-color: #fafbfc;
 	background-image: -webkit-linear-gradient(270deg, #fafbfc 0%, #eff3f6 90%);
 	background-image: linear-gradient(-180deg, #fafbfc 0%, #eff3f6 90%);
 }
 
-.btn-danger:focus {
+.btn-red:focus {
 	box-shadow: 0 0 0 0.2em rgba(203,36,49,0.3);
 }
 
-.btn-danger:hover {
+.btn-red:hover {
 	color: #fff;
 	background-color: #cb2431;
 	background-image: -webkit-linear-gradient(270deg, #de4450 0%, #cb2431 90%);
@@ -67,7 +68,7 @@ a:hover {
 	border-color: rgba(27,31,35,0.5);
 }
 
-.btn-danger:active {
+.btn-red:active {
 	color: #fff;
 	background-color: #b5202c;
 	background-image: none;
@@ -75,7 +76,7 @@ a:hover {
 	box-shadow: inset 0 0.15em 0.3em rgba(27,31,35,0.15);
 }
 
-.btn-danger:disabled {
+.btn-red:disabled {
 	color: rgba(203,36,49,0.4);
 	background-color: #eff3f6;
 	background-image: none;
@@ -97,7 +98,7 @@ a:hover {
 }
 
 .btn-purple:hover {
-	/*color: #fff;*/
+	color: #fff;
 	background-color: #5f37a8;
 	background-image: -webkit-linear-gradient(270deg, #784ec5 0%, #5f37a8 90%);
 	background-image: linear-gradient(-180deg, #784ec5 0%, #5f37a8 90%);
@@ -134,6 +135,7 @@ a:hover {
 }
 
 .btn-blue:hover {
+	color: #fff;
 	background-color: #035cc2;
 	background-image: -webkit-linear-gradient(270deg, #0374f4 0%, #035cc2 90%);
 	background-image: linear-gradient(-180deg, #0374f4 0%, #035cc2 90%);
