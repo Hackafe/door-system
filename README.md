@@ -1,1 +1,1 @@
-# door-system
+This is custom door system made from me (Ivan Puntev(Gallowwalker)) for Hackafe. Its purpose is to make the door access easy for the hackerspace members. You need to use only your smartphone.
