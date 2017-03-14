@@ -3,7 +3,7 @@
 a {
 	color: #0366d6;
 	text-decoration: none;
-} 
+}
 
 a:hover {
 	color: #0366d6;
@@ -25,16 +25,9 @@ a:hover {
 }
 
 .btn-danger:hover {
-	color:#fff;
-<<<<<<< HEAD
+	color: #fff;
 	background-color: #cb2431;
 	background-image: -webkit-linear-gradient(270deg, #de4450 0%, #cb2431 90%);
 	background-image: linear-gradient(-180deg, #de4450 0%, #cb2431 90%);
 	border-color: rgba(27,31,35,0.5);
-=======
-	background-color:#cb2431;
-	background-image:-webkit-linear-gradient(270deg, #de4450 0%, #cb2431 90%);
-	background-image:linear-gradient(-180deg, #de4450 0%, #cb2431 90%);
-	border-color:rgba(27,31,35,0.5);
->>>>>>> b028747e13d4ad0571233bad7dd9d52dfab824a5
 }
