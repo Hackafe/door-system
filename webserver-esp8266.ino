@@ -10,12 +10,13 @@ const char* password = "";
 byte buttonState = HIGH;
 boolean isLocked = true;
 String request = "";
-
-unsigned long previousMillis = 0;
-
-unsigned long currentMillis = 0;
-
-const unsigned short interval = 500;
+String accessStatus = "";
+String imageStatus = "";
+String string1 = "HTTP/1.1 200 OK\n";
+String string2 = "Content-Type: text/html\n";
+String string3 = "\n"; // do not forget this one
+String string4 = "", string5 = "", string6 = "", string7 = "", formString = "";
+String finalString = "";
 
 //18-FE-34-A1-FE-94  esp mac
 
@@ -36,14 +37,8 @@ void setup() {
   WiFi.begin(ssid, password);
   
   server.begin();
-}
 
-
-void generateTopHTML() {
-  client.println("HTTP/1.1 200 OK");
-  client.println("Content-Type: text/html");
-  client.println(""); //  do not forget this one
-  client.println("<!DOCTYPE html>\
+  string4 = "<!DOCTYPE html>\
 <html lang=\"en\">\
   <head>\
     <title>Hackafe door system</title>\
@@ -65,61 +60,35 @@ void generateTopHTML() {
         <div class=\"col-sm-2\"></div>\
         <div class=\"col-sm-3\"></div>\
       </div>\
-  ");
-}
-
-void generateImageStatusHTML(int choice) {
-  client.println("<div class=\"row\">\
+  <div class=\"row\">\
         <div class=\"col-sm-3\"></div>\
         <div class=\"col-sm-2\"></div>\
         <div class=\"col-sm-2\">\
           <a href=\"/unlock=true\" class=\"a center-block\">\
-  ");
-  switch (choice) {
-    case 1:
-    client.println("<img class=\"img-responsive center-block\" src=\"https://hackafe.github.io/door-system/images/unlocked.png\" draggable=\"false\" />");
-    break;
-    case 0:
-    client.println("<img class=\"img-responsive center-block\" src=\"https://hackafe.github.io/door-system/images/locked.png\" draggable=\"false\" />");
-    break;
-    default: return;   
-  }        
- client.println("</a>\
+          ";
+          //imageStatus
+         string5 = " </a>\
         </div>\
         <div class=\"col-sm-2\"></div>\
         <div class=\"col-sm-3\"></div>\
       </div>\
-  ");
-}
-
-void generateAccessStatusHTML(int choice) {
-  client.println("<div class=\"row\">\
+<div class=\"row\">\
         <div class=\"col-sm-3\"></div>\
         <div class=\"col-sm-2\"></div>\
         <div class=\"col-sm-2\">\
           <h2 class=\"text center-block\">\
             <strong>\
- ");
- switch (choice) {
-    case 1:
-    client.println("Access Granted!");
-    break;
-    case 0:
-    client.println("Access Denied!");
-    break;
-    default: return;   
-  }        
- client.println("</strong>\
+            ";
+            //accessStatus
+          string6 = "  </strong>\
           </h2>\
         </div>\
         <div class=\"col-sm-2\"></div>\
         <div class=\"col-sm-3\"></div>\
       </div>\
-  ");
-}
+  ";
 
-void generatePasswordFormHTML() {
-  client.println("<div class=\"row\">\
+  formString = "<div class=\"row\">\
       <div class=\"col-sm-3\"></div>\
       <div class=\"col-sm-2\"></div>\
       <div class=\"col-sm-2\">\
@@ -141,11 +110,9 @@ void generatePasswordFormHTML() {
       <div class=\"col-sm-2\"></div>\
       <div class=\"col-sm-3\"></div>\
     </div><br />\
-  ");
-}
-
-void generateBottomHTML() {  
-  client.println("<div class=\"row\">\
+  ";
+  
+  string7 = "<div class=\"row\">\
           <div class=\"col-sm-3\"></div>\
           <div class=\"col-sm-2\"></div>\
           <div class=\"col-sm-2\">\
@@ -157,13 +124,10 @@ void generateBottomHTML() {
       </div>\
     </body>\
   </html>\
-  ");
+  ";
 }
 
 void loop() {
-
-  currentMillis = millis();
-
   
   if (digitalRead(manualOverrideButton) == LOW) {
     buttonState = LOW;
@@ -172,82 +136,60 @@ void loop() {
     buttonState = HIGH;
     digitalWrite(intercomSignalRelays, LOW);
   }
-
-
-
   
-  // Check if a client has connected
   client = server.available();
   
   if (!client) {
     return;
   }
-
-
-
+  
   request = client.readStringUntil('\r');
   client.flush();
-
-
-   if (request.indexOf("/unlock=true") != -1) {
-   isLocked = false;
-   generateTopHTML();
-   generateImageStatusHTML(1);
-   generateAccessStatusHTML(1);
-   generateBottomHTML();
   
-
+  if (request.indexOf("/unlock=true") != -1) {
+    isLocked = false;
     if (buttonState == LOW) {
       digitalWrite(intercomSignalRelays, LOW);
     } else {
       digitalWrite(intercomSignalRelays, HIGH);
     }
     delay(600);
-
     
     digitalWrite(intercomUnlockRelay, HIGH);
     delay(600);
-
     
     digitalWrite(intercomUnlockRelay, LOW);
     delay(600);
-
     
     if (buttonState == LOW) {
       digitalWrite(intercomSignalRelays, HIGH);
     } else {
       digitalWrite(intercomSignalRelays, LOW);
     }
-
+    
     delay(600);
-  } 
+  }
+ 
+  switch (isLocked) {
+    case 0:
+      accessStatus = "Access Granted!";
+      imageStatus = "<img class=\"img-responsive center-block\" src=\"https://hackafe.github.io/door-system/images/unlocked.png\" draggable=\"false\" />";
+      break;
+    case 1:
+      imageStatus = "<img class=\"img-responsive center-block\" src=\"https://hackafe.github.io/door-system/images/locked.png\" draggable=\"false\" />";
+      break;
+    default:;   
+  }        
   
-
-// Return the response
-  //client.println("HTTP/1.1 200 OK");
-  //client.println("Content-Type: text/html");
-  //client.println(""); //  do not forget this one
-if (isLocked) {
-   generateTopHTML();
-   generateImageStatusHTML(0);
-   generatePasswordFormHTML();
-   //generateAccessStatusHTML("Access Granted!");
-   generateBottomHTML();
-   //you shall not pass :D
-   isLocked = true;
-}
-   //client.println("<!DOCTYPE html>\
-   // <html>\
-    // <head>\
-     // </head>\
-     // <body>\
-     // <center>\
-     // <h1>Click <a href=\"/unlock=true\">here</a> to unlock the door</h1>\
-      //</center>\
-    //  </body>\
-   // </html>\
- // ");
-
+  if (isLocked) {
+    finalString =  string4 + imageStatus + string5 + string6 + formString + string7;
+  } else {
+    finalString =  string4 + imageStatus + string5 + accessStatus + string6 + string7;
+  }
+  
+  client.println(finalString);
+  
+  isLocked = true;
   
   client.stop();
 } 
