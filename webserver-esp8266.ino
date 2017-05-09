@@ -132,9 +132,6 @@ void setup() {
     </body>\n\
   </html>\n\
   ";
-
-  finalString1 =  string4 + imageStatus + string5 + string6 + formString + string7;
-  finalString2 =  string4 + imageStatus + string5 + accessStatus + string6 + buttonsString + string7;
 }
 
 void loop() {
@@ -204,9 +201,9 @@ void renderPage(bool isLocked) {
   }        
   
   if (isLocked) {
-    client.println(finalString1);
+    finalString = string4 + imageStatus + string5 + string6 + formString + string7;
   } else {
-    client.println(finalString2);
+    finalString = string4 + imageStatus + string5 + accessStatus + string6 + buttonsString + string7;
   }
-  
+  client.println(finalString);
 }
