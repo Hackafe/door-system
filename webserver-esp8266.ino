@@ -6,6 +6,7 @@ const char* password = "";
 #define manualOverrideButton 5
 #define intercomSignalRelays 13
 #define intercomUnlockRelay 15
+#define speaker 16
 
 byte buttonState = HIGH;
 boolean isLocked = true;
@@ -28,12 +29,15 @@ WiFiServer server(80);
 WiFiClient client = server.available();
 
 void renderPage(bool isLocked);
+void makeSound();
 
 void setup() {
   pinMode(intercomSignalRelays, OUTPUT);
   pinMode(intercomUnlockRelay, OUTPUT);
+  pinMode(speaker, OUTPUT);
   digitalWrite(intercomSignalRelays, LOW);
   digitalWrite(intercomUnlockRelay, LOW);
+  analogWrite(speaker, 0);
   
   WiFi.config(ip, gateway, subnet);
   WiFi.begin(ssid, password);
@@ -155,7 +159,7 @@ void loop() {
   
   if (request.indexOf("/unlock=true") != -1) {
     isLocked = false;
-
+    
     renderPage(isLocked);
     
     if (buttonState == LOW) {
@@ -178,7 +182,7 @@ void loop() {
     }
     
     delay(600);
-    
+    makeSound();
   }
 
   if (isLocked) {
@@ -207,3 +211,21 @@ void renderPage(bool isLocked) {
   }
   client.println(finalString);
 }
+
+void makeSound() {
+  analogWrite(speaker, 255);
+  delay(100);
+  analogWrite(speaker, 0);
+  delay(100);
+  
+  analogWrite(speaker, 255);
+  delay(100);
+  analogWrite(speaker, 0);
+  delay(100);
+  
+  analogWrite(speaker, 255);
+  delay(100);
+  analogWrite(speaker, 0);
+  delay(100);
+}
+
